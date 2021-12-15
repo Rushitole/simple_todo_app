@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>RUSHI'S TODO</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #495057;
+      text-align: left;
+      background-image: linear-gradient(
+135deg, #007991 30%, #78ffd6 90%);
+    }
+
+    i {
+      font-style: italic;
+    }
+
+    .container {
+      margin-top: 100px;
+    }
+
+    .card {
+      box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03),
+        0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
+        0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
+        0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+      border-width: 0;
+      transition: all 0.2s;
+    }
+
+    .card-header:first-child {
+      border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      border-bottom-width: 1px;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0.625rem;
+      height: 3.5rem;
+      background-color: #fff;
+    }
+
+    .widget-subheading {
+      color: #858a8e;
+      font-size: 10px;
+    }
+
+    .card-header.card-header-tab .card-header-title {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .card-header .header-icon {
+      font-size: 1.65rem;
+      margin-right: 0.625rem;
+    }
+
+    .card-header.card-header-tab .card-header-title {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .btn-actions-pane-right {
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .text-capitalize {
+      text-transform: capitalize !important;
+    }
+
+    .scroll-area-sm {
+      height: 288px;
+      overflow-x: hidden;
+    }
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 0.75rem 1.25rem;
+      margin-bottom: -1px;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .list-group {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+
+    .todo-indicator {
+      position: absolute;
+      width: 4px;
+      height: 60%;
+      border-radius: 0.3rem;
+      left: 0.625rem;
+      top: 20%;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .bg-warning {
+      background-color: #f7b924 !important;
+    }
+
+    .widget-content {
+      padding: 1rem;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .widget-content .widget-content-wrapper {
+      display: flex;
+      flex: 1;
+      position: relative;
+      align-items: center;
+    }
+
+    .widget-content .widget-content-right.widget-content-actions {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .widget-content .widget-content-right {
+      margin-left: auto;
+    }
+
+    .btn:not(:disabled):not(.disabled) {
+      cursor: pointer;
+    }
+
+    .btn {
+      position: relative;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s,
+        box-shadow 0.15s;
+    }
+
+    .btn-outline-success {
+      color: #3ac47d;
+      border-color: #3ac47d;
+    }
+
+    .btn-outline-success:hover {
+      color: #fff;
+      background-color: #3ac47d;
+      border-color: #3ac47d;
+    }
+
+    .btn-outline-success:hover {
+      color: #fff;
+      background-color: #3ac47d;
+      border-color: #3ac47d;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background-color: #3f6ad8;
+      border-color: #3f6ad8;
+    }
+
+    .btn {
+      position: relative;
+      transition: color 0.15s, background-color 0.15s, border-color 0.15s,
+        box-shadow 0.15s;
+      outline: none !important;
+    }
+
+    .card-footer {
+      background-color: #fff;
+    }
+
+    .small_form {
+      width: 500px;
+    }
+  </style>
+
+  <body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">RUSHI'S TODO-(HOME)</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+          {% if user.is_authenticated %}
+          </li>
+           <ul class="nav-item">
+              <a class="nav-link" href="/signup">logout</a>
+            
+          </li>
+          {% else %}
+          <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/signup">Signup</a>
+              
+          </li>
+          {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="row d-flex justify-content-center container">
+      <div class="col-md-8">
+        <div class="card-hover-shadow-2x mb-3 card">
+          <div class="card-header-tab card-header">
+            <div
+              class="
+                card-header-title
+                font-size-lg
+                text-capitalize
+                font-weight-normal
+              "
+            >
+              <i class="fa fa-tasks"></i>&nbsp;Todo-Task
+            </div>
+          </div>
+          <div class="scroll-area-sm">
+            <perfect-scrollbar class="ps-show-limits">
+              <div style="position: static" class="ps ps--active-y">
+                <div class="ps-content">
+                  <ul class="list-group list-group-flush">
+                    {% for each_todo in Todo %}
+                    <li class="list-group-item">
+                      <div class="todo-indicator bg-primary"></div>
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                          <div class="widget-content-left mr-2">
+                            <div class="custom-checkbox custom-control">
+                              <input
+                                class="custom-control-input"
+                                id="exampleCustomCheckbox{{each_todo.id }}"
+                                type="checkbox"
+                              /><label
+                                class="custom-control-label"
+                                for="exampleCustomCheckbox{{each_todo.id }}"
+                                >&nbsp;</label
+                              >
+                            </div>
+                          </div>
+                          <div class="widget-content-left flex2">
+                            <div class="widget-heading">
+                              {{each_todo.title}}
+                            </div>
+                            <div class="widget-subheading">
+                              {{each_todo.description}}
+                            </div>
+                          </div>
+                          <div class="widget-content-right">
+                            {% if each_todo.completed%}
+                            <a href={% url 'todo:unmarktodo' each_todo.id%}>
+                              <button
+                                class="
+                                  border-0
+                                  btn-transition btn btn-outline-danger
+                                "
+                              >
+                                <i class="fa fa-times"></i>
+                              </button>
+                            </a>
+                            {% else %}
+                            <a href={% url 'todo:marktodo' each_todo.id%}>
+                              <button
+                                class="
+                                  border-0
+                                  btn-transition btn btn-outline-success
+                                "
+                              >
+                                <i class="fa fa-check"></i>
+                              </button>
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'todo:delete' each_todo.id %}">
+                              <button
+                                class="
+                                  border-0
+                                  btn-transition btn btn-outline-danger
+                                "
+                              >
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+          <div class="d-block text-right card-footer">
+            <button class="mr-2 btn btn-link btn-sm">Cancel</button
+            ><button
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+            >
+              Add Task
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+
+    >
+      <div
+          class="modal-dialog modal-dialog-centered modal-lg"
+          role="document"
+        >
+          <form
+            style="width: 700px"
+            method="POST"
+            action="{% url 'todo:addtodo' %}"
+          >
+            {% csrf_token %}
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">ADD YOUR TODO HERE</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1" >Todo Title</label>
+                  <input
+                    name="todo_title"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Todo Title"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Todo Description</label>
+                  <input
+                    name="todo_description"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Todo Description"
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
